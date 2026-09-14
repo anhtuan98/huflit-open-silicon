@@ -8,10 +8,18 @@ chỉ ghi những gì đã **thay đổi hoặc được xác nhận thêm** so 
 ## Trạng thái hiện tại
 
 - **Giai đoạn:** 0 (90 ngày đầu, bắt đầu 2026-09-14) — xác thực con người.
+- **Người dẫn Giai đoạn 0:** Nguyễn Anh Tuấn (xác nhận 2026-09-14). Việc chặn
+  tất cả việc khác (kickoff doc §11) đã được giải quyết — có thể bắt đầu tuần
+  1-2 (§4).
 - **Cổng đang chờ:** Cổng 0 — 1 PR được merge vào một dự án quốc tế trước
-  2026-12-13 (90 ngày từ ngày khởi động).
-- **Việc chặn tất cả việc khác:** chưa xác định người dẫn Giai đoạn 0 (xem
-  kickoff doc §11). Không việc kỹ thuật nào khác nên bắt đầu trước khi có người.
+  2026-12-13 (90 ngày từ ngày xác nhận người dẫn).
+- **Hạ tầng tuần 1-2 đã xong (2026-09-14):** IIC-OSIC-TOOLS qua Docker chạy
+  được trên máy Ubuntu (amd64; image cũng có bản arm64 native cho macOS/Apple
+  Silicon). `librelane --smoke-test` Pass. Ví dụ `spm` chạy trọn RTL→GDSII,
+  DRC/LVS/Antenna Pass, GDSII giữ lại tại `tmp/spm_example/` (local, không
+  commit). Chi tiết: `backlog.md`.
+- **Repo:** đang tạo remote GitHub công khai (2026-09-14) — theo ADR-OS-004,
+  đúng lúc vì đã có người dẫn xác nhận.
 
 ## Phi mục tiêu đang hiệu lực (nhắc lại — xem kickoff doc §1.2)
 
@@ -33,3 +41,4 @@ trong mảng verification thương mại.
 | Ngày | Thay đổi |
 |---|---|
 | 2026-09-14 | Khởi tạo từ `OPEN_SILICON_KICKOFF.md` v0.1. Giai đoạn 0 bắt đầu, chưa có người dẫn. |
+| 2026-09-14 | Xác nhận người dẫn Giai đoạn 0: Nguyễn Anh Tuấn. Hoàn tất mốc hạ tầng tuần 1-2 (Docker + smoke test). Bắt đầu tạo remote GitHub công khai. |

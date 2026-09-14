@@ -47,6 +47,5 @@ workflow.
 
 ## License
 
-TBD — pick a license compatible with the upstream projects this program
-contributes to (Apache-2.0 is the default used by LibreLane and most of this
-ecosystem) before the first external contribution goes out.
+[Apache License 2.0](LICENSE) — matches the license used by LibreLane and
+most of this ecosystem.
