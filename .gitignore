@@ -1,0 +1,39 @@
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# LibreLane / OpenLane run artifacts
+runs/
+*.gds
+*.gdsii
+*.lef
+*.def.gz
+
+# Simulation / waveform artifacts
+*.vcd
+*.fst
+*.fst.hier
+obj_dir/
+sim_build/
+.pytest_cache/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+
+# Scratch / cache / temp files (see CLAUDE.md) — never tracked, not even a placeholder
+tmp/
+
+# Internal cross-project naming notes — not for this repo's public audience
+brainstorming/code_naming_guide.md

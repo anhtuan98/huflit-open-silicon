@@ -1,0 +1,8 @@
+.git
+wiki/
+brainstorming/
+*.md
+runs/
+sim_build/
+obj_dir/
+.env

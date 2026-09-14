@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    name: lint (docs)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v18
+        with:
+          globs: "**/*.md"
+
+  # Stubs below activate once designs/ and verification/ have real content.
+  # Do not remove -- this is the target pipeline per docs/OPEN_SILICON_KICKOFF.md §6:
+  # lint -> sim -> LibreLane -> hash comparison.
+
+  simulate:
+    name: cocotb / Verilator (stub)
+    runs-on: ubuntu-latest
+    if: false # enable once verification/ has a testbench
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "TODO: run cocotb testbenches under verification/"
+
+  librelane:
+    name: LibreLane RTL->GDSII (stub)
+    runs-on: ubuntu-latest
+    if: false # enable once designs/ has a design
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "TODO: run librelane on designs/<name>, compare GDS hash"
