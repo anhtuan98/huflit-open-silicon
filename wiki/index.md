@@ -18,6 +18,8 @@ greenfield at scaffold time. Articles below come from real exploration.
   FP_SIZING, DIE_AREA, PDN_SKIPTRIM, PDN-0185, DPL-0036, designs/counter3/config.yaml, sky130A, ihp-sg13g2
 - [Reading LibreLane's final/metrics.json](librelane-metrics-json.md)
   design__instance__count, power__total units (mW), timing__setup__ws, flow.log checker lines, stage count via `ls -d [0-9]*`
+- [uart: Sizing Threshold and Post-Route Slew Margin](uart-signoff-sizing-and-slew-margin.md)
+  designs/uart/config.yaml, DESIGN_REPAIR_MAX_SLEW_PCT, GRT_DESIGN_REPAIR_MAX_SLEW_PCT, design__max_slew_violation__count, when default FP_CORE_UTIL sizing is fine vs counter3's FP_SIZING: absolute
 
 ### Verification (cocotb / Verilator)
 <!-- verification/, testbench conventions per upstream project -->

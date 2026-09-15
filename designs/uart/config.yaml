@@ -1,0 +1,18 @@
+# Basics
+DESIGN_NAME: uart_top
+VERILOG_FILES: dir::src/*.v
+CLOCK_PERIOD: 10
+CLOCK_PORT: clk
+
+# Timing repair -- the default slew-repair margins (20% post-placement,
+# 10% post-route) leave a few nets marginally over the raw max-slew limit
+# once final detailed-route parasitics are in (only visible at the ss
+# process corner, ~7% over on a single 3-fanout net). Widening the margins
+# gives the resizer more headroom up front to absorb that later
+# degradation.
+DESIGN_REPAIR_MAX_SLEW_PCT: 25
+GRT_DESIGN_REPAIR_MAX_SLEW_PCT: 15
+
+# Technology-Specific Configs
+pdk::sky130*:
+  CLOCK_PERIOD: 10.0
