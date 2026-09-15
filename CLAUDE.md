@@ -4,9 +4,27 @@ Hướng dẫn cho Claude Code khi làm việc trong repo này.
 
 ## Xưng hô
 
-- Gọi người dùng là **"thầy"**.
-- Tự xưng là **"em"**.
-- Áp dụng cho mọi hội thoại trong repo này, kể cả khi trả lời bằng tiếng Anh trong code/docs (nội dung tiếng Anh giữ nguyên chuẩn tiếng Anh; quy tắc xưng hô chỉ áp dụng cho lời thoại tiếng Việt với thầy).
+- Khi hội thoại bằng **tiếng Việt**: gọi người dùng là **"thầy"**, tự xưng
+  **"em"**.
+- Khi hội thoại bằng **tiếng Anh**: dùng "you"/"I" bình thường như tiếng Anh
+  chuẩn — **không** chèn "thầy"/"em" vào câu tiếng Anh (thầy đã sửa lại điều
+  này 2026-09-14, ghi đè quy tắc cũ trong bản trước của file này).
+
+## Ngôn ngữ làm việc (2026-09-14)
+
+- **Từ nay ngôn ngữ chính của hội thoại là tiếng Anh** — dự án công khai,
+  đóng góp cho cộng đồng quốc tế. Thầy sẽ gõ prompt bằng tiếng Anh; trả lời
+  bằng tiếng Anh chuẩn (you/I, xem mục Xưng hô).
+- Thỉnh thoảng thầy sẽ chèn từ/cụm tiếng Việt vào prompt khi chưa biết thuật
+  ngữ tiếng Anh tương ứng (thường là thuật ngữ chuyên ngành EDA/verification).
+  Khi gặp trường hợp này:
+  - Nhận diện đúng phần tiếng Việt đó, đề xuất thuật ngữ tiếng Anh chuẩn
+    (thuật ngữ ngành dùng trong LibreLane/OpenROAD/cocotb docs, không tự
+    chế), kèm giải thích ngắn 1 câu nếu là khái niệm mới.
+  - Không âm thầm dịch cả câu rồi trả lời như không có gì — nêu rõ mình vừa
+    sửa/chọn từ gì, để thầy học được thuật ngữ đó luôn.
+  - Toàn bộ code, docs (ngoài `docs/vi/`), commit message, PR description
+    vẫn tiếng Anh (ADR-OS-004).
 
 ## Bối cảnh dự án
 
@@ -15,6 +33,12 @@ Hướng dẫn cho Claude Code khi làm việc trong repo này.
 - Giai đoạn hiện tại: **Giai đoạn 0** — xác thực con người, không lập tổ chức, không mua sắm, không công bố. Xem §4 và §11 của kickoff doc.
 - Quy ước repo, DevSecOps: dùng skill `huflit-dev-op-skill`. Bảo mật ứng dụng: `huflit-secure-by-design`. Phát hiện & ứng phó sự cố: `huflit-threat-detect`. Thiết kế test: `huflit-test-design`. Web style (nếu có dashboard/report): `huflit-web-style`.
 - Bộ nhớ agent cho repo này: `wiki/` (theo skill `wiki-memory`) — đọc `wiki/index.md` trước khi khám phá source, ghi hint sau khi khám phá sâu.
+- `docs/vi/` — tài liệu tiếng Việt, hai mục đích song song (xem
+  `docs/vi/README.md`): (1) bản dịch tài liệu gốc gửi ngược upstream (Giai
+  đoạn 1), (2) tài liệu học tập nguyên bản tiếng Việt cho sinh viên HUFLIT
+  (khái niệm, glossary Anh-Việt các thuật ngữ EDA/verification gặp trong quá
+  trình làm) — không bắt buộc gửi upstream, mục tiêu là hạ rào cản ngôn ngữ
+  cho người học trong nước.
 
 ## Scratch / temp files
 
