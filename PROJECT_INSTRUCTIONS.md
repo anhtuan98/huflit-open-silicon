@@ -42,3 +42,4 @@ trong mảng verification thương mại.
 |---|---|
 | 2026-09-14 | Khởi tạo từ `OPEN_SILICON_KICKOFF.md` v0.1. Giai đoạn 0 bắt đầu, chưa có người dẫn. |
 | 2026-09-14 | Xác nhận người dẫn Giai đoạn 0: Nguyễn Anh Tuấn. Hoàn tất mốc hạ tầng tuần 1-2 (Docker + smoke test). Bắt đầu tạo remote GitHub công khai. |
+| 2026-09-16 | ADR-OS-007: thuê VM cloud theo giờ cho compute nặng trong Giai đoạn 0-1, chỉ tính mua server thật khi chương trình tự nuôi sống được về tài chính (mốc cụ thể chưa xác định). Xem `docs/decisions/ADR-OS-007-rent-compute-before-buying.md`. |

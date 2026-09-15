@@ -231,3 +231,10 @@
   that's checked. Recommendation: hold any FPGA teaching track until the
   ULX3S arrives; DE10/Ti180 stay usable for unrelated, non-public purposes
   in the meantime, just not as this program's public FPGA story.
+- **ADR-OS-007 (2026-09-16): rent cloud compute by the hour, don't buy
+  server hardware, until the program is financially self-sustaining.**
+  Prompted by the `picorv32` cloud-burst plan (Linode, see below) --
+  thầy's own framing: renting saves upfront capex and maintenance during
+  the early, personnel-risk-heavy phase; revisit buying dedicated
+  regression hardware once the program can afford it on its own revenue.
+  Full rationale: `docs/decisions/ADR-OS-007-rent-compute-before-buying.md`.
