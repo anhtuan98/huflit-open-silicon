@@ -55,13 +55,31 @@
   `docs/counter3-slides.md`. Vietnamese adaptation for HUFLIT students
   (`docs/vi/` purpose #2, includes an EN-VI EDA glossary):
   `docs/vi/counter3-bao-cao-ky-thuat.md`, `docs/vi/counter3-slides.md`.
+- **Gate 0 IP shortlist research done (2026-09-15):** three parallel agents
+  searched (a) the FOSSi ecosystem itself (cocotb, LibreLane, Embench),
+  (b) RISC-V/PULP/OpenHW, (c) general catalogs (OpenCores, LibreCores,
+  Tiny Tapeout, CHIPS Alliance, IHP-Open-DesignLib). Screened out as dead
+  or wrong-shaped: OpenCores/FreeCores (no activity since 2023), Tiny
+  Tapeout (submission model, not a maintained IP with an issue tracker),
+  IHP-Open-DesignLib (aggregates one-off tapeout batches, no single-IP
+  ownership), `core-v-verif` (UVM-only methodology, cocotb likely won't
+  fit), `ibex` (full CPU core, too large), `apb_uart` (logic moved into
+  `obi_uart`, now just a wrapper), `librelane/librelane` main repo (open
+  issues are flow/tooling bugs, not IP verification gaps). Chosen target
+  and watch-list below.
 
 ## In progress
 
-- Nothing in progress. `counter3` is the first of possibly more small
-  learning designs (UART is the other one kickoff doc §4 names) before
-  moving to week 7-12 (pick an upstream IP, write a cocotb testbench, get a
-  PR merged -- the actual Gate 0 deliverable).
+- **UART learning design** (`designs/uart/`) — building via a background
+  agent in an isolated git worktree, mirroring `designs/counter3/`'s rigor
+  (RTL, cocotb testbench, full LibreLane signoff to clean DRC/LVS/timing).
+  Not yet reviewed or merged into `main`.
+- **Gate 0 target chosen: `obi_uart`** (`pulp-platform/obi_peripherals`) —
+  a UART peripheral with only a single directed SystemVerilog testbench
+  and **no cocotb coverage at all** (confirmed via the repo's own commit
+  history, most recently active 2026-08-24). See Next/TODO for the
+  outreach step to do before investing in writing the testbench, and
+  Decisions & context for why this one over the others found.
 
 ## Next / TODO
 
@@ -74,13 +92,39 @@
   a dated tag (e.g. `year.month`, see the image's own tag scheme on Docker
   Hub) once the Phase 0 lead is set up, so their environment is byte-for-byte
   reproducible from day one.
-- [ ] Kickoff doc §4 week 3-6 is technically satisfiable with just
-  `counter3`, but a UART would exercise more of the flow (multi-clock-domain
-  thinking, more cells) if there's time before moving to week 7-12.
-- [ ] Shortlist 10 candidate open-source IPs for the first PR target (kickoff
-  doc §11) — this is the actual next milestone (week 7-12, Gate 0).
+- [ ] **obi_uart outreach (do this before writing the testbench):** open a
+  small issue/comment on `pulp-platform/obi_peripherals` asking (a)
+  whether the maintainers would accept a cocotb-based testbench alongside
+  their existing Verilator/SystemVerilog one — there is no precedent yet
+  of any external contributor's PR being merged in this repo, and (b)
+  whether PR #9 (register interface refactor) is close to landing —
+  writing a testbench against an interface that's about to change is
+  wasted work.
+- [ ] **"Nối hướng" the two UART efforts (thầy, 2026-09-15):** once the
+  `designs/uart/` background build above finishes, check whether its
+  cocotb driver/monitor pattern (send/observe framed serial bytes,
+  loopback checking) transfers directly onto `obi_uart`'s DUT, or needs
+  adapting to the OBI bus protocol on top of the serial pins. The two
+  should reinforce each other -- the from-scratch design is a rehearsal
+  for the real testbench, not a separate track.
+- [ ] Watch-list from the shortlist research — worth pursuing later when
+  there's spare time, but not the current focus (thầy, 2026-09-15):
+  - `apb_timer` (pulp-platform) — zero test scaffolding, but already has
+    a confirmed, still-open bug (issue #7: build fails when
+    `NUM_TIMERS=1`, a `$clog2` edge case) — the "find a real bug" step is
+    already done here, unusually.
+  - `chipsalliance/usb2` — NXP-driven, very active, maintainers
+    explicitly want more test coverage (issues #5/#7/#13 tagged `[DV]`,
+    plus smaller scoped bugs #19/#20) — but it's VHDL/GHDL, not the
+    Verilator path used so far, and no external contributor's PR has
+    been merged there yet.
+  - `librelane/librelane-ci-designs` — thematically the closest match to
+    this program (small IPs incl. a UART, used for LibreLane's own CI),
+    but the repo is 14+ months stale with zero external-PR precedent —
+    treat as a fallback only, not a first choice.
 - [ ] Verify Efinix EULA before publishing any findings about their tooling
-  (kickoff doc §11) — only relevant if/when Efinix tooling is touched.
+  (kickoff doc §11) — still open; see the FPGA testbed note in Decisions &
+  context below for why this matters now, not just hypothetically.
 
 ## Known issues & gotchas
 
@@ -140,3 +184,22 @@
   `PROJECT_INSTRUCTIONS.md`, not rewritten here.
 - Non-goals are load-bearing: no department, no lab, no equipment purchase,
   no tape-out, no press, in the first 12 months. See kickoff doc §1.2.
+- **FPGA hardware testbed (thầy asked 2026-09-15, re: DE10-Standard,
+  Efinix Ti180, and an ULX3S on order from AliExpress):** not needed at
+  all for the current Gate 0 work. `obi_uart` verification (like
+  `counter3`) is pure cocotb/Verilator simulation -- no board is required
+  to write a testbench, find a bug, or get a PR merged. FPGA is a
+  separate, optional teaching use case (kickoff doc §5.3: FPGA teaches
+  RTL/FSM/testbench/CDC hands-on; it does **not** teach floorplan, PDN,
+  CTS, or DRC/LVS/GDSII sign-off -- only LibreLane does, and that needs no
+  hardware at all). For that separate use case, if/when it comes up: the
+  DE10-Standard (Intel Cyclone V) and Efinix Ti180 both need a proprietary
+  toolchain (Quartus, Efinity) to program -- neither has a FOSS flow
+  comparable to Yosys+nextpnr+Trellis for the ECP5 -- so featuring either
+  in public program material would break the FOSS-first,
+  no-proprietary-tooling-required principle (`README.md`, ADR-OS-004).
+  Ti180 additionally still has the open Efinix EULA question (kickoff doc
+  §11, TODO above) unresolved -- don't publish anything about it before
+  that's checked. Recommendation: hold any FPGA teaching track until the
+  ULX3S arrives; DE10/Ti180 stay usable for unrelated, non-public purposes
+  in the meantime, just not as this program's public FPGA story.
