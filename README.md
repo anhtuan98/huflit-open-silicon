@@ -14,6 +14,23 @@ Full context, positioning, roadmap with stage gates, and ADRs:
 [`docs/OPEN_SILICON_KICKOFF.md`](docs/OPEN_SILICON_KICKOFF.md).
 Evolving source of truth for decisions: [`PROJECT_INSTRUCTIONS.md`](PROJECT_INSTRUCTIONS.md).
 
+## Status
+
+**Phase 0** (started 2026-09-14) — validating that one person can get a real
+pull request merged upstream. Single gate: **one PR merged into an
+international open-source project before 2026-12-13.**
+
+Progress against the phase 0 roadmap (`docs/OPEN_SILICON_KICKOFF.md` §4):
+
+- [x] Weeks 1-2 — reproducible toolchain via Docker (IIC-OSIC-TOOLS),
+  `librelane --smoke-test` passing.
+- [x] Weeks 3-6 — a self-written design ([`designs/counter3/`](designs/counter3/))
+  through the full RTL → GDSII flow with DRC/LVS/timing sign-off.
+- [ ] Weeks 7-12 — a cocotb testbench against an upstream open-source IP and
+  a merged PR (the actual gate).
+
+Running log: [`backlog.md`](backlog.md).
+
 ## Repository layout
 
 ```
