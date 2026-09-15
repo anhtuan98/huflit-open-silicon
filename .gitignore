@@ -36,5 +36,8 @@ Thumbs.db
 # Scratch / cache / temp files (see CLAUDE.md) — never tracked, not even a placeholder
 tmp/
 
+# Claude Code agent worktrees (created for isolated background sub-agent work)
+.claude/worktrees/
+
 # Internal cross-project naming notes — not for this repo's public audience
 brainstorming/code_naming_guide.md
