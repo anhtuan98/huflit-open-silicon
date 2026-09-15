@@ -95,10 +95,23 @@
 - **Gate 0 target chosen: `obi_uart`** (`pulp-platform/obi_peripherals`) —
   a UART peripheral with only a single directed SystemVerilog testbench
   and **no cocotb coverage at all** (confirmed via the repo's own commit
-  history, most recently active 2026-08-24). Outreach posted (see Done
-  above) -- blocked on a maintainer response before writing the
-  testbench. See Decisions & context for why this one over the others
-  found.
+  history, most recently active 2026-08-24). See Decisions & context for
+  why this one over the others found.
+  - **Maintainer replied on PR #9 (2026-09-15, `phsauter`,
+    [comment](https://github.com/pulp-platform/obi_peripherals/pull/9#issuecomment-5678713911)):**
+    confirms the register interface is **not** stable yet -- "there is
+    actually one further change that needs to be done downstream of
+    this," targeted "this week." Reason for the delay: they test against
+    real hardware, not just simulation -- `obi_uart` is validated as part
+    of the **Cheshire SoC on FPGA** with multiple UART devices on the
+    other side, which takes time to run. Two things to take from this:
+    (a) fast, substantive maintainer response on day 0 -- strong signal
+    this is a well-run, responsive project, good sign for a first PR
+    landing here; (b) **still blocked** -- don't start the testbench
+    against the current register interface, it's about to change. No
+    reply yet on the separate cocotb-acceptance issue.
+  - Next check-in: revisit in ~1 week (thầy to ping, or check the PR/issue
+    directly) rather than polling.
 
 ## Next / TODO
 
