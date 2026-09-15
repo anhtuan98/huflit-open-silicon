@@ -22,6 +22,7 @@ runs/
 obj_dir/
 sim_build/
 .pytest_cache/
+results.xml
 
 # Editors / OS
 .vscode/

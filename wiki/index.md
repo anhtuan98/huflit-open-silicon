@@ -4,24 +4,26 @@ Agent memory for this repo. Hints and pointers only — never answers. See
 `wiki/TEMPLATE.md` for article structure and `../wiki-memory` skill for the
 read/write protocol.
 
-No articles yet — repo is freshly scaffolded (2026-09-14), no source code or
-merged PRs exist to learn from. JS-1 bootstrap (last ~60 merged PRs) does not
-apply to a greenfield repo; the first real articles come from actual
-exploration once `designs/` or `verification/` have content.
+JS-1 bootstrap (last ~60 merged PRs) does not apply to this repo -- it was
+greenfield at scaffold time. Articles below come from real exploration.
 
-## Categories (fill in as articles are written)
+## Categories
 
 ### Docs & ADRs
 <!-- docs/, docs/decisions/, PROJECT_INSTRUCTIONS.md -->
 
 ### Designs (RTL -> GDSII)
-<!-- designs/, LibreLane configs, Step/Flow/State model -->
+
+- [LibreLane Config for Tiny Designs](librelane-config-for-tiny-designs.md)
+  FP_SIZING, DIE_AREA, PDN_SKIPTRIM, PDN-0185, DPL-0036, designs/counter3/config.yaml, sky130A, ihp-sg13g2
 
 ### Verification (cocotb / Verilator)
 <!-- verification/, testbench conventions per upstream project -->
 
 ### Toolchain / Docker
-<!-- docker/, IIC-OSIC-TOOLS environment, PDK selection -->
+
+- [Docker Toolchain Invocation (IIC-OSIC-TOOLS)](docker-toolchain-invocation.md)
+  --skip, --workdir, cocotb-config --makefiles, librelane --smoke-test, librelane --run-example, docker/docker-compose.yml
 
 ### CI/CD
 <!-- .github/workflows/, lint -> sim -> LibreLane -> hash pipeline -->

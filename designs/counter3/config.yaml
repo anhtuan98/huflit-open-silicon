@@ -1,0 +1,28 @@
+# Basics
+DESIGN_NAME: counter3
+VERILOG_FILES: dir::src/*.v
+CLOCK_PERIOD: 10
+CLOCK_PORT: clk
+
+# Floorplan -- percentage-based sizing (FP_CORE_UTIL) produces a die too
+# small for a design this tiny (~10-20 cells) once PDN straps and hold
+# buffers need room, causing DPL-0036 detailed placement failures during
+# post-CTS resizing. An explicit absolute die area sidesteps that.
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 100, 100]
+
+# PDN -- defaults assume a design much bigger than 3 flip-flops; a die this
+# small needs a tighter strap pattern or PDN generation fails with
+# PDN-0185 "insufficient width". Same values as LibreLane's own spm example,
+# which hits the same problem for the same reason (tiny design).
+PDN_VOFFSET: 5
+PDN_HOFFSET: 5
+PDN_VWIDTH: 2
+PDN_HWIDTH: 2
+PDN_VPITCH: 30
+PDN_HPITCH: 30
+PDN_SKIPTRIM: true
+
+# Technology-Specific Configs
+pdk::sky130*:
+  CLOCK_PERIOD: 10.0
