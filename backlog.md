@@ -67,19 +67,38 @@
   `obi_uart`, now just a wrapper), `librelane/librelane` main repo (open
   issues are flow/tooling bugs, not IP verification gaps). Chosen target
   and watch-list below.
+- **UART second learning design done (2026-09-15):** `designs/uart/` —
+  independent TX/RX modules, 8N1 framing, built via a background agent in
+  an isolated git worktree, reviewed, and merged into `main`. 3/3 cocotb
+  tests passing; full LibreLane signoff, 76/76 stages, 0 DRC/LVS/antenna
+  errors, 0 timing violations. Unlike `counter3`, needed **no**
+  `FP_SIZING: absolute` / PDN tuning (default sizing landed at 75.3%
+  utilization on its own) -- confirms that fix is specific to genuinely
+  tiny designs, not a general requirement. Did hit one new signoff issue
+  (post-route max-slew violations at the `ss` corner only, fixed via
+  `DESIGN_REPAIR_MAX_SLEW_PCT`/`GRT_DESIGN_REPAIR_MAX_SLEW_PCT`), written
+  up in `wiki/uart-signoff-sizing-and-slew-margin.md`.
+- **UART teaching material written (2026-09-15):** technical report and
+  slide deck, same structure as the `counter3` pair. English (primary
+  asset): `docs/uart-technical-report.md`, `docs/uart-slides.md`.
+  Vietnamese adaptation (`docs/vi/` purpose #2, with an additional
+  EN-VI glossary for terms not already covered by the counter3 one):
+  `docs/vi/uart-bao-cao-ky-thuat.md`, `docs/vi/uart-slides.md`.
+- **obi_uart outreach posted (2026-09-15):** thầy posted both the PR #9
+  status question (as a comment on
+  `pulp-platform/obi_peripherals` PR #9) and the cocotb-acceptance
+  question (as a new issue on the repo). Now waiting on a maintainer
+  response before writing the testbench.
 
 ## In progress
 
-- **UART learning design** (`designs/uart/`) — building via a background
-  agent in an isolated git worktree, mirroring `designs/counter3/`'s rigor
-  (RTL, cocotb testbench, full LibreLane signoff to clean DRC/LVS/timing).
-  Not yet reviewed or merged into `main`.
 - **Gate 0 target chosen: `obi_uart`** (`pulp-platform/obi_peripherals`) —
   a UART peripheral with only a single directed SystemVerilog testbench
   and **no cocotb coverage at all** (confirmed via the repo's own commit
-  history, most recently active 2026-08-24). See Next/TODO for the
-  outreach step to do before investing in writing the testbench, and
-  Decisions & context for why this one over the others found.
+  history, most recently active 2026-08-24). Outreach posted (see Done
+  above) -- blocked on a maintainer response before writing the
+  testbench. See Decisions & context for why this one over the others
+  found.
 
 ## Next / TODO
 
@@ -92,21 +111,17 @@
   a dated tag (e.g. `year.month`, see the image's own tag scheme on Docker
   Hub) once the Phase 0 lead is set up, so their environment is byte-for-byte
   reproducible from day one.
-- [ ] **obi_uart outreach (do this before writing the testbench):** open a
-  small issue/comment on `pulp-platform/obi_peripherals` asking (a)
-  whether the maintainers would accept a cocotb-based testbench alongside
-  their existing Verilator/SystemVerilog one — there is no precedent yet
-  of any external contributor's PR being merged in this repo, and (b)
-  whether PR #9 (register interface refactor) is close to landing —
-  writing a testbench against an interface that's about to change is
-  wasted work.
-- [ ] **"Nối hướng" the two UART efforts (thầy, 2026-09-15):** once the
-  `designs/uart/` background build above finishes, check whether its
-  cocotb driver/monitor pattern (send/observe framed serial bytes,
-  loopback checking) transfers directly onto `obi_uart`'s DUT, or needs
-  adapting to the OBI bus protocol on top of the serial pins. The two
-  should reinforce each other -- the from-scratch design is a rehearsal
-  for the real testbench, not a separate track.
+- [ ] **Check for a maintainer response** on the two `obi_uart` outreach
+  posts (see Done, 2026-09-15) -- don't start writing the testbench until
+  either gets a reply, per the reasoning already posted (no precedent of
+  an external PR merged there yet, and PR #9's register interface may
+  still be in flux).
+- [ ] **"Nối hướng" the two UART efforts, once outreach clears:** apply
+  `designs/uart/verify/test_uart.py`'s byte-framing pattern
+  (send/observe start-data-stop bits, loopback checking) to `obi_uart`'s
+  actual DUT -- check whether it transfers directly or needs adapting to
+  the OBI bus protocol layered on top of the serial pins. See
+  `docs/uart-technical-report.md` §7.
 - [ ] Watch-list from the shortlist research — worth pursuing later when
   there's spare time, but not the current focus (thầy, 2026-09-15):
   - `apb_timer` (pulp-platform) — zero test scaffolding, but already has

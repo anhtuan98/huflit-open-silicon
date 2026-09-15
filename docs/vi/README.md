@@ -28,6 +28,12 @@ Mục tiêu: hạ rào cản ngôn ngữ cho sinh viên Việt Nam muốn tiếp
   [`docs/counter3-technical-report.md`](../counter3-technical-report.md).
 - [`counter3-slides.md`](counter3-slides.md) — slide thuyết trình dựa trên
   báo cáo trên.
+- [`uart-bao-cao-ky-thuat.md`](uart-bao-cao-ky-thuat.md) — báo cáo kỹ
+  thuật thiết kế `uart_top` (thiết kế học tập thứ hai, tùy chọn), kèm
+  bảng thuật ngữ Anh-Việt bổ sung. Phỏng theo bản gốc tiếng Anh
+  [`docs/uart-technical-report.md`](../uart-technical-report.md).
+- [`uart-slides.md`](uart-slides.md) — slide thuyết trình dựa trên báo
+  cáo trên.
 
 Chưa có bản dịch nào ở mục 1 — Giai đoạn 0 chưa đến bước bản địa hóa
 (Giai đoạn 1, xem `backlog.md`).
