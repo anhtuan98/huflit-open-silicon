@@ -20,4 +20,14 @@ làm việc — viết trực tiếp bằng tiếng Việt, **không** cần g�
 dung upstream vẫn là tiếng Anh, xem `CLAUDE.md` § Ngôn ngữ làm việc).
 Mục tiêu: hạ rào cản ngôn ngữ cho sinh viên Việt Nam muốn tiếp cận mảng này.
 
-Chưa có tài liệu nào ở cả hai mục — Giai đoạn 0 vừa bắt đầu (xem `backlog.md`).
+Đã có:
+
+- [`counter3-bao-cao-ky-thuat.md`](counter3-bao-cao-ky-thuat.md) — báo cáo
+  kỹ thuật thiết kế `counter3` (tuần 3-6 Giai đoạn 0), kèm bảng thuật ngữ
+  Anh-Việt. Phỏng theo bản gốc tiếng Anh
+  [`docs/counter3-technical-report.md`](../counter3-technical-report.md).
+- [`counter3-slides.md`](counter3-slides.md) — slide thuyết trình dựa trên
+  báo cáo trên.
+
+Chưa có bản dịch nào ở mục 1 — Giai đoạn 0 chưa đến bước bản địa hóa
+(Giai đoạn 1, xem `backlog.md`).

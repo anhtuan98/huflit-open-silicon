@@ -40,11 +40,21 @@
   own design (not a bundled example) run trọn RTL→GDSII with full DRC/LVS/
   timing sign-off. `designs/counter3/` — a 3-bit synchronous up-counter
   (`src/counter3.v`), cocotb testbench (`verify/`, 2/2 tests passing via
-  Verilator), LibreLane `config.yaml`. Full Classic flow 80/80 stages,
-  Antenna/LVS/DRC all Passed, no setup/hold/slew/cap violations. GDSII at
+  Verilator), LibreLane `config.yaml`. Full Classic flow 76/76 stages
+  (corrected 2026-09-15 -- an earlier note here said 80, checked against
+  the actual run directory while writing the technical report, see
+  `docs/counter3-technical-report.md`), Antenna/LVS/DRC all Passed, no
+  setup/hold/slew/cap violations. GDSII at
   `designs/counter3/runs/RUN_2026-09-14_18-09-59/final/gds/counter3.gds`
   (gitignored — `runs/` regenerates from `config.yaml`, not committed, per
   "reproducible from Git" — commit the config, not the binary output).
+- **counter3 teaching material written (2026-09-15):** technical report
+  and slide deck covering the design, verification methodology, LibreLane
+  flow, and the three gotchas from the entry above, for use as course
+  material. English (primary asset): `docs/counter3-technical-report.md`,
+  `docs/counter3-slides.md`. Vietnamese adaptation for HUFLIT students
+  (`docs/vi/` purpose #2, includes an EN-VI EDA glossary):
+  `docs/vi/counter3-bao-cao-ky-thuat.md`, `docs/vi/counter3-slides.md`.
 
 ## In progress
 

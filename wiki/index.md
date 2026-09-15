@@ -16,6 +16,8 @@ greenfield at scaffold time. Articles below come from real exploration.
 
 - [LibreLane Config for Tiny Designs](librelane-config-for-tiny-designs.md)
   FP_SIZING, DIE_AREA, PDN_SKIPTRIM, PDN-0185, DPL-0036, designs/counter3/config.yaml, sky130A, ihp-sg13g2
+- [Reading LibreLane's final/metrics.json](librelane-metrics-json.md)
+  design__instance__count, power__total units (mW), timing__setup__ws, flow.log checker lines, stage count via `ls -d [0-9]*`
 
 ### Verification (cocotb / Verilator)
 <!-- verification/, testbench conventions per upstream project -->
