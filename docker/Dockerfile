@@ -4,9 +4,13 @@
 # KLayout, ngspice, LibreLane, Verilator, cocotb. See docs/OPEN_SILICON_KICKOFF.md
 # section 2.1 and 5.1.
 #
-# VERIFY BEFORE FIRST USE: pin the exact tag from
-# https://github.com/iic-jku/IIC-OSIC-TOOLS — "latest" below is a placeholder,
-# not a pinned reproducible build. See backlog.md.
-FROM hpretl/iic-osic-tools:latest
+# Pinned to the 2026.08 monthly release (2026-08-25) for reproducibility --
+# was ":latest" (a floating tag) until 2026-09-16. Confirmed on Docker Hub
+# to be ~3.76GB compressed (vs. an unpinned multi-version-accreted
+# ":latest" pull observed locally at ~16GB uncompressed on disk). Bump
+# deliberately (not automatically) when there's a reason to, and note the
+# change in backlog.md -- see https://github.com/iic-jku/IIC-OSIC-TOOLS for
+# the tag list.
+FROM hpretl/iic-osic-tools:2026.08
 
 WORKDIR /workspace
