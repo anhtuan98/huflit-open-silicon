@@ -89,6 +89,55 @@
   `pulp-platform/obi_peripherals` PR #9) and the cocotb-acceptance
   question (as a new issue on the repo). Now waiting on a maintainer
   response before writing the testbench.
+- **apb_timer PR drafted (2026-09-15):** issue #7 (`TIMER_CNT=1` build
+  failure) root-caused, fixed, and regression-tested. Commits local-only
+  in `tmp/apb_timer/` (`2e177fe`, `68e7471`, not pushed), PR title/body
+  drafted in `tmp/apb_timer/PR_DESCRIPTION.md`. Blocked only on thầy
+  forking the upstream repo and pushing (no GitHub write access from
+  this session).
+- **Linode cloud-burst mechanics validated end-to-end (2026-09-16):**
+  full rehearsal on a Nano instance (1 vCPU/1GB RAM/25GB disk,
+  `172.104.57.135`) using `counter3` as a lightweight stand-in payload:
+  SSH (key-based), scp upload (not git clone, per thầy's preference),
+  Docker install, pinned-image build (3.76GB compressed / 16GB on disk --
+  watch this on small disks), full LibreLane flow (76/76 stages, clean
+  signoff, 5m45s even on 1 vCPU/1GB RAM), and the
+  `/home/natuan/outputs` file-location convention thầy set. Confirmed
+  pip is unavailable/unused on this VM by design (apt-only) and none of
+  the cloud-burst scripts need it. `docker/cloud-burst/telegram_notify.sh`
+  added for milestone alerts (bootstrap done, early finish, time-limit
+  checkpoint) -- needs a bot token from thầy (via @BotFather) before it
+  can actually send anything, degrades to local-log-only otherwise.
+  Key operational decision from thầy: **resize this same instance
+  in-place** (Linode supports this) rather than create a new VM for the
+  real run -- Docker/images/files all survive a resize since it's the
+  same disk, no re-bootstrap needed, just confirm disk auto-expanded
+  after resize (`growpart`/`resize2fs` if not) before the real run.
+- **picorv32 local fine-tuning, 8 rounds (2026-09-16, overnight per
+  thầy's request while he slept):** designs/picorv32/ (YosysHQ picorv32
+  core, ISC license, ~19k instances -- first design at this scale in the
+  repo) taken through repeated local LibreLane iterations on this 8-core
+  laptop, specifically to de-risk the config AND generate real
+  resource-sizing data before spending on the cloud VM. Three concrete,
+  wiki-documented findings (`wiki/librelane-threading-and-timing-strategy.md`):
+  (1) `OPENROAD_THREADS`/`STA_THREADS` must be set explicitly -- silently
+  fall back to 1 thread despite docs claiming auto-detect (fixing this
+  cut a full-flow run from ~62min to ~21min on 8 cores); (2)
+  `SYNTH_STRATEGY: "DELAY 4"` beats the default `"AREA 0"` for timing
+  closure on a real core; (3) applying uart's own slew-margin fix
+  (`DESIGN_REPAIR_MAX_SLEW_PCT`) at this design's scale reproducibly
+  OOM-killed OpenROAD (~20GB RSS, confirmed via `journalctl -k`),
+  independent of thread count -- a real RAM ceiling, not a bug, and
+  direct empirical evidence for kickoff doc §5.2's RAM-sizing question.
+  **Best clean result achieved** (`designs/picorv32/config.yaml` as
+  currently committed-ready, `CLOCK_PERIOD: 30` / `SYNTH_STRATEGY: "DELAY
+  4"` / explicit threads): 76/76 stages, **0 setup/hold violations**
+  (worst slack +2.79ns), DRC/LVS/antenna/XOR all clean, reproduced
+  identically on a second run (bonus: informal determinism confirmation).
+  **Not yet fully clean:** 2837 max-slew + 31 max-cap violations remain
+  unrepaired -- fixing them is exactly the kind of task that needs the
+  cloud machine's RAM, not something to keep chasing locally. GDSII
+  preserved (not committed -- gitignored `runs/`, per convention).
 
 ## In progress
 
@@ -112,6 +161,14 @@
     reply yet on the separate cocotb-acceptance issue.
   - Next check-in: revisit in ~1 week (thầy to ping, or check the PR/issue
     directly) rather than polling.
+- **Linode Nano VM `172.104.57.135` still running** -- rehearsal complete
+  and successful (see Done above). Waiting on thầy to resize it in-place
+  to the Dedicated plan (50 cores / 128GB per thầy's latest sizing, up
+  from the originally-discussed 32/96) and kick off the real `picorv32`
+  burst (fix the remaining slew/cap violations, then the N-way
+  determinism check). Config is ready (`designs/picorv32/config.yaml`);
+  scripts in `docker/cloud-burst/` still need one consolidation pass
+  (see Known issues below) before they're the thing thầy actually runs.
 
 ## Next / TODO
 
@@ -202,6 +259,21 @@
   used: write the test's expectations relative to the previous observed
   cycle (self-referential), not to an absolute cycle count tied to exactly
   when a deasserted reset is presumed to take effect.
+- **`OPENROAD_THREADS`/`STA_THREADS` silently default to 1 thread**
+  despite documentation claiming auto-detect of the machine's core
+  count; **`SYNTH_STRATEGY` defaults to area-optimized, not timing**; and
+  the uart-style slew-margin repair fix can **OOM-kill OpenROAD** on a
+  ~19k-instance design regardless of thread count (~20GB RSS observed).
+  Full detail: `wiki/librelane-threading-and-timing-strategy.md`.
+- **`docker/cloud-burst/` has duplicate/overlapping scripts** from two
+  different authors (a background agent's own initiative plus the
+  parent session, working in parallel without realizing it) --
+  `bootstrap.sh`, `driver.sh`, `retrieve.sh`, `retrieve_results.sh`,
+  `bundle_results.py`, `telegram_notify.sh` all coexist, not all
+  mutually consistent (e.g. git-clone-based vs. thầy's actual
+  scp-based approach). Needs one consolidation pass before it's handed
+  to thầy as "the" script to run on the resized VM -- don't just pick
+  one file at random, read all of them first.
 
 ## Decisions & context
 
