@@ -1,0 +1,35 @@
+# Basics
+DESIGN_NAME: picorv32
+VERILOG_FILES: dir::src/*.v
+CLOCK_PERIOD: 30
+CLOCK_PORT: clk
+
+# Fine-tuning findings (2026-09-16 local exploration, see backlog.md and
+# the eventual technical report for full narrative):
+# - Default SYNTH_STRATEGY "AREA 0" is area-optimized, not timing --
+#   switching to "DELAY 4" measurably improved timing closure.
+# - Combined with CLOCK_PERIOD 30ns (33 MHz, a conservative target for a
+#   real RV32I core vs. the 100MHz used for the tiny counter3/uart
+#   designs), this configuration closes setup AND hold timing cleanly
+#   (0 violations) with DRC/LVS/antenna all clean.
+# - Residual max-slew/max-cap violations (thousands) remain unrepaired at
+#   these settings. Attempting to fix them via explicit
+#   DESIGN_REPAIR_MAX_SLEW_PCT/GRT_DESIGN_REPAIR_MAX_SLEW_PCT (the same
+#   mechanism that worked for designs/uart) reproducibly OOM-killed
+#   OpenROAD on this 23GB local machine (confirmed via kernel log:
+#   anon-rss ~20GB) regardless of OPENROAD_THREADS/STA_THREADS (crashed
+#   identically at 8 and at 4 threads) -- a genuine RAM ceiling tied to
+#   design size (19k instances, 6316 nets needing repair), not a
+#   threading bug. Left at defaults here; revisit with more RAM.
+SYNTH_STRATEGY: "DELAY 4"
+
+# Threading -- OPENROAD_THREADS/STA_THREADS default to "None", documented
+# as "equal to the machine's core count" but observed to silently fall
+# back to 1 thread in this container (confirmed via docker stats never
+# exceeding ~101% CPU across a full run). Set explicitly.
+OPENROAD_THREADS: 8
+STA_THREADS: 9
+
+# Technology-Specific Configs
+pdk::sky130*:
+  CLOCK_PERIOD: 30.0
