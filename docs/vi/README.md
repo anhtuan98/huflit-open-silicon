@@ -22,6 +22,15 @@ Mục tiêu: hạ rào cản ngôn ngữ cho sinh viên Việt Nam muốn tiếp
 
 Đã có:
 
+- [`chip-making-a-to-z.md`](chip-making-a-to-z.md) — toàn cảnh quy trình
+  RTL-to-GDSII theo khái niệm (không gắn với một mốc cụ thể), dùng
+  `counter3` làm ví dụ minh hoạ, kèm bảng thuật ngữ Anh-Việt. Phỏng theo
+  bản gốc tiếng Anh
+  [`docs/chip_making_a_to_z.md`](../chip_making_a_to_z.md).
+- [`cocotb-huong-dan-viet-testbench.md`](cocotb-huong-dan-viet-testbench.md)
+  — hướng dẫn đọc từng dòng code testbench cocotb, dùng
+  `test_counter3.py` làm ví dụ. Phỏng theo bản gốc tiếng Anh
+  [`docs/cocotb-testbench-guide.md`](../cocotb-testbench-guide.md).
 - [`counter3-bao-cao-ky-thuat.md`](counter3-bao-cao-ky-thuat.md) — báo cáo
   kỹ thuật thiết kế `counter3` (tuần 3-6 Giai đoạn 0), kèm bảng thuật ngữ
   Anh-Việt. Phỏng theo bản gốc tiếng Anh
@@ -34,6 +43,12 @@ Mục tiêu: hạ rào cản ngôn ngữ cho sinh viên Việt Nam muốn tiếp
   [`docs/uart-technical-report.md`](../uart-technical-report.md).
 - [`uart-slides.md`](uart-slides.md) — slide thuyết trình dựa trên báo
   cáo trên.
+- [`picorv32-bao-cao-ky-thuat.md`](picorv32-bao-cao-ky-thuat.md) — nhật
+  ký debug đầy đủ (9 lần thử) cho thiết kế học tập thứ ba, `picorv32`
+  (core RISC-V thật, ~19k instance), kèm bảng thuật ngữ Anh-Việt bổ
+  sung. Phỏng theo bản gốc tiếng Anh
+  [`docs/picorv32-technical-report.md`](../picorv32-technical-report.md).
+  Mục 1 của bài trả lời thẳng câu hỏi "có đáng công bố không".
 
 Chưa có bản dịch nào ở mục 1 — Giai đoạn 0 chưa đến bước bản địa hóa
 (Giai đoạn 1, xem `backlog.md`).

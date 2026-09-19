@@ -39,5 +39,10 @@ tmp/
 # Claude Code agent worktrees (created for isolated background sub-agent work)
 .claude/worktrees/
 
-# Internal cross-project naming notes — not for this repo's public audience
-brainstorming/code_naming_guide.md
+# Internal working notes (budget drafts, cross-project naming notes, event
+# research) — not for this repo's public audience per CLAUDE.md ("Tuyệt đối
+# không dùng tool Artifact... brainstorming là bản nháp nội bộ"). Whole
+# directory, not just one file -- 2026-09-19: found two more untracked
+# files here (budget proposal, ORConf notes) that this narrower rule had
+# been about to let slip into a commit.
+brainstorming/

@@ -138,6 +138,64 @@
   unrepaired -- fixing them is exactly the kind of task that needs the
   cloud machine's RAM, not something to keep chasing locally. GDSII
   preserved (not committed -- gitignored `runs/`, per convention).
+- **`picorv32` technical report written (2026-09-17):**
+  `docs/picorv32-technical-report.md` -- full attempt-by-attempt
+  narrative of all 9 local rounds (§5 of that doc), including the
+  process mistake of losing attempt 5's artifacts to an `rm -rf`
+  before preserving them (had to be regenerated as attempt 9), and an
+  explicit, unresolved anomaly (why attempts 1-2's *less* negative
+  setup slack triggered LibreLane's hard-quit path while attempt 3's
+  *worse* slack did not). Answers thầy's question about whether this
+  work is publication-worthy directly in the report's own §1: not as a
+  `picorv32` contribution (no bug found, no PR possible), but yes as a
+  public technical article on LibreLane's own behavior at this design
+  scale -- and the threading auto-detect gap (§6.1) is separately
+  worth filing as a `librelane/librelane` issue, independent of the
+  article.
+- **picorv32 report: Vietnamese adaptation + LibreLane issue drafted
+  (2026-09-17):** thầy confirmed both, citing Vietnamese students as the
+  primary audience but English as necessary for international
+  reputation-building. Vietnamese: `docs/vi/picorv32-bao-cao-ky-thuat.md`
+  (full 9-attempt narrative, same honesty about the unresolved anomaly
+  and the lost-artifact mistake, plus a supplementary EN-VI glossary).
+  Issue draft for `librelane/librelane` (the §6.1 threading auto-detect
+  gap): `tmp/librelane-thread-issue.md` -- not posted, needs thầy's
+  GitHub account.
+- **ORConf 2026 program reviewed for 2027 submission planning
+  (2026-09-18):** pulled the real 73-talk program (not just the landing
+  page) directly from the conference site's embedded data. Full notes,
+  curated relevant-talk list, and 2027 pitch ideas in
+  `brainstorming/orconf-2026-review-and-2027-plan.md` (gitignored, internal
+  only). Confirmed a genuine gap worth exploiting: **no 2026 talk covered
+  Southeast Asia or language localization** -- backs up kickoff doc §9's
+  prediction about the Vietnamese-localization talk angle. Also flagged
+  two tools to watch (`EDABench` -- ML integrated into LibreLane itself;
+  `RVVTS` -- RISC-V ISA-extension bug-hunting framework) as directly
+  relevant to this program's own toolchain, independent of any conference
+  submission.
+- **Teaching material: full RTL-to-GDSII flow explainer + cocotb
+  walkthrough written (2026-09-18/19),** prompted by thầy asking to
+  understand the whole flow and how to write a cocotb testbench, using
+  `counter3` as the concrete example throughout. Four files, EN original +
+  VI adaptation each (per `docs/vi/` purpose #2):
+  `docs/chip_making_a_to_z.md` / `docs/vi/chip-making-a-to-z.md` (what
+  each of the ~9 conceptual stages does, where LibreLane's 76 sub-stages
+  fit, the two-different-meanings-of-"verify" distinction thầy asked
+  about specifically, what GDSII actually is, what tape-out means and why
+  this program hasn't done it yet); `docs/cocotb-testbench-guide.md` /
+  `docs/vi/cocotb-huong-dan-viet-testbench.md` (line-by-line walkthrough
+  of `test_counter3.py` -- `dut` handle, `Clock`/`start_soon` vs. `await`,
+  `RisingEdge`, relative-vs-absolute assertions, plus a suggested
+  practice exercise: add a mid-count reset test). Both explicitly tie
+  back to why this matters for the program: this is the exact skill set
+  Gate 0 needs on `obi_uart`.
+- **`.gitignore` fixed (2026-09-19):** `brainstorming/` was only excluding
+  one specific file (`code_naming_guide.md`), not the whole directory --
+  two more untracked, internal-only files (the budget proposal, the
+  ORConf notes above) were sitting unprotected and would have been swept
+  into a broad `git add`. Now the whole directory is ignored, matching
+  the intent already stated in `CLAUDE.md` and in the budget proposal's
+  own header.
 
 ## In progress
 
@@ -161,17 +219,38 @@
     reply yet on the separate cocotb-acceptance issue.
   - Next check-in: revisit in ~1 week (thầy to ping, or check the PR/issue
     directly) rather than polling.
-- **Linode Nano VM `172.104.57.135` still running** -- rehearsal complete
-  and successful (see Done above). Waiting on thầy to resize it in-place
-  to the Dedicated plan (50 cores / 128GB per thầy's latest sizing, up
-  from the originally-discussed 32/96) and kick off the real `picorv32`
-  burst (fix the remaining slew/cap violations, then the N-way
-  determinism check). Config is ready (`designs/picorv32/config.yaml`);
-  scripts in `docker/cloud-burst/` still need one consolidation pass
-  (see Known issues below) before they're the thing thầy actually runs.
+- **Linode Nano VM `172.104.57.135` being deleted (2026-09-17), plan to
+  resize it changed.** Thầy decided to delete the rehearsal VM to stop
+  paying for it, rather than resize it in-place as previously planned.
+  Confirmed via SSH (`natuan@172.104.57.135`, still Nano: 1 vCPU/~1GB RAM,
+  25GB disk 80% full) that the real `picorv32` burst had **not** started
+  on it yet -- only the `counter3` rehearsal payload was on there, so no
+  picorv32 data was at risk. Before deletion, rsync'd the real data (76MB:
+  configs, Verilog source, cocotb/LibreLane logs, the rehearsal's signed-off
+  GDSII in 3 formats) to `tmp/linode_172.104.57.135_backup/` (gitignored,
+  local only) -- deliberately skipped the 16GB-on-disk Docker image
+  (`docker-librelane-dev:latest`, rebuildable from `docker/Dockerfile`) and
+  the VM's own system dirs (`.ssh`/`.docker`/`.config`/`.cache`). Thầy is
+  deleting the VM himself via the Linode dashboard/API (declined to give
+  this session delete access). **Still open:** the real `picorv32` burst
+  (fix remaining slew/cap violations + N-way determinism check) now has no
+  VM to run on -- next cloud-burst attempt needs a fresh VM provisioned
+  first. `docker/cloud-burst/` scripts still need the consolidation pass
+  noted in Known issues below regardless of which VM they eventually run on.
 
 ## Next / TODO
 
+- [ ] **thầy is actively learning the RTL-to-GDSII flow and cocotb
+  testbench writing** (started 2026-09-18/19, reference material:
+  `docs/chip_making_a_to_z.md`, `docs/cocotb-testbench-guide.md` and their
+  `docs/vi/` counterparts). Next session: don't assume this is done after
+  one read-through -- check in on whether thầy did the suggested
+  `counter3` mid-count-reset exercise (`docs/cocotb-testbench-guide.md`
+  §4), review what he wrote, and keep answering follow-up "why" questions
+  about the flow until he can read/write a testbench without needing the
+  basic concepts re-explained. This is direct preparation for writing the
+  `obi_uart` testbench (Gate 0) -- treat it as a prerequisite
+  skill-building thread, not a one-off Q&A.
 - [ ] Decide time-protection mechanism for the lead role (reduced teaching
   load or stipend) — still open, kickoff doc §11.
 - [ ] `docker/Dockerfile` and `docker/docker-compose.yml` still track the
